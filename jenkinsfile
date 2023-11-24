@@ -1,13 +1,10 @@
 pipeline {
   agent any
-  stages { 
-    stage("Check Maven in PATH") {
+  stages {
+    stage("Check Environment Variables") {
       steps {
-        node {
-          // Puedes especificar un label o el nombre de un agente específico aquí
-          script {
-            sh 'echo $PATH'
-          }
+        script {
+          sh 'printenv'
         }
       }
     }
