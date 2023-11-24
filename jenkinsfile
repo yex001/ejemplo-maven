@@ -1,14 +1,16 @@
 pipeline {
   agent none
   stages { 
+    stage("Check Maven in PATH") {
+      steps {
+        script {
+          sh 'echo $PATH'
+        }
+      }
+    }
     stage("build & sonarqube") {
       agent any
         steps {
-          script {
-            env.VARIABLES.each { k, v ->
-            echo "${k}=${v}"
-            }
-          }
           withSonarQubeEnv('SonarQube_server') {
             sh 'mvn clean package sonar:sonar'
           }
