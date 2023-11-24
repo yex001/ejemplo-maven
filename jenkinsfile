@@ -1,21 +1,26 @@
 pipeline {
-  agent any
-  stages {
-    stage("Check Environment Variables") {
-      steps {
-        script {
-          sh 'printenv'
+    agent any
+    stages {
+        stage("Check Environment Variables") {
+            steps {
+                script {
+                    echo 'Checking Environment Variables...'
+                    echo "PATH: ${env.PATH}"
+                    echo "M2_HOME: ${env.M2_HOME}"
+                    echo "MAVEN_HOME: ${env.MAVEN_HOME}"
+                    echo "JAVA_HOME: ${env.JAVA_HOME}"
+                    echo "SONARQUBE_SCANNER_HOME: ${env.SONARQUBE_SCANNER_HOME}"
+                }
+            }
         }
-      }
-    }
-    stage("build & sonarqube") {
-      steps {
-        script {
-          withSonarQubeEnv('SonarQube_server') {
-            sh 'mvn clean package sonar:sonar'
-          }
+        stage("build & sonarqube") {
+            steps {
+                script {
+                    withSonarQubeEnv('SonarQube_server') {
+                        sh 'mvn clean package sonar:sonar'
+                    }
+                }
+            }
         }
-      }
     }
-  }
 }
