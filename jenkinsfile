@@ -1,10 +1,10 @@
 pipeline {
-  agent none
+  agent any
   stages { 
     stage("Check Maven in PATH") {
-      agent any
       steps {
         node {
+          // Puedes especificar un label o el nombre de un agente específico aquí
           script {
             sh 'echo $PATH'
           }
@@ -12,7 +12,6 @@ pipeline {
       }
     }
     stage("build & sonarqube") {
-      agent any
       steps {
         script {
           withSonarQubeEnv('SonarQube_server') {
