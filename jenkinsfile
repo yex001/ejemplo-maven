@@ -2,19 +2,24 @@ pipeline {
   agent none
   stages { 
     stage("Check Maven in PATH") {
+      agent any
       steps {
-        script {
-          sh 'echo $PATH'
+        node {
+          script {
+            sh 'echo $PATH'
+          }
         }
       }
     }
     stage("build & sonarqube") {
       agent any
-        steps {
+      steps {
+        script {
           withSonarQubeEnv('SonarQube_server') {
             sh 'mvn clean package sonar:sonar'
           }
         }
+      }
     }
   }
 }
